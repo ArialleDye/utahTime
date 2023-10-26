@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Automatic Axios POST Request</title>
+    <!-- Import Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Import Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-200 h-screen flex flex-col justify-center items-center">
+
+    <div class="text-center">
+        <h1 id="responseContainer" class="text-6xl">
+            <!-- Response will be displayed here -->
+        </h1>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await axios.post('https://wnmlhfpise2fpfgxc7om23hpii0lvvcl.lambda-url.us-east-1.on.aws/', {
+                    // your payload here
+                });
+                const cleanResponse = JSON.stringify(response.data).replace(/\"/g, "");
+                document.getElementById("responseContainer").innerText = cleanResponse;
+            } catch (error) {
+                document.getElementById("responseContainer").innerText = "Error: " + error;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchData();  // Fetch immediately upon load
+            setInterval(fetchData, 1000);  // Refresh every 1 second
+        });
+    </script>
+
+</body>
+</html>
